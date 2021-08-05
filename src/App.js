@@ -93,56 +93,63 @@ class App extends react.Component{
             <div className="App">
                 <div className="App-header">
                     <Container>
-                        <p>Planogram UI</p>
-                        <div className={{margin:"10px"}}>
-                            <Row>
-                                <Col sm="6">
-                            <p>Enter Rows</p>
-                            <input name="rows" type="number" value={this.state.rows} min="1" onChange={this.updateValue} />
-                                </Col>
-                                <Col >
-                            <p>Enter Columns</p>  
-                            <input name="cols" type="number" value={this.state.cols} min="1" onChange={this.updateValue} />
-                                </Col>
-                            </Row>
-                        </div>
-                        <p>Planogram Boxes</p>
-                        {this.state.rowele.map((value,index)=>{
-                            return(
-                                <div key={index}>
+                        <Row>
+                            <Col sm="6">
+                                <p>Planogram Boxes</p>
+                                {this.state.rowele.map((value,index)=>{
+                                    return(
+                                        <div key={index}>
+                                            <Row>
+                                            {this.state.colele.map((val2,index2)=>{
+                                                return(
+                                                    <div key={index2} onClick={(event)=>this.selectBox(value,val2,event)} style={{width:"50px",borderRadius:"10px",height:"50px",margin:"10px",display:"flex",position:"flex-start",backgroundColor:this.state.colorArray[value][val2],color:"white",fontSize:"smaller"}}> 
+                                                        <b>{value},{val2}</b>
+                                                    </div>
+                                                )
+                                            })}
+                                            </Row>
+                                        </div>
+                                    )
+                                })}
+                            </Col>
+                            <Col sm="6">
+                                <p>Planogram UI</p>
+                                <div className={{margin:"10px"}}>
                                     <Row>
-                                    {this.state.colele.map((val2,index2)=>{
-                                        return(
-                                            <div key={index2} onClick={(event)=>this.selectBox(value,val2,event)} style={{width:"50px",borderRadius:"10px",height:"50px",margin:"10px",display:"flex",position:"flex-start",backgroundColor:this.state.colorArray[value][val2],color:"white",fontSize:"smaller"}}> 
-                                                <b>{value},{val2}</b>
-                                            </div>
-                                        )
-                                    })}
+                                        <Col sm="6">
+                                            <p>Enter Rows</p>
+                                            <input name="rows" type="number" value={this.state.rows} min="1" onChange={this.updateValue} />
+                                        </Col>
+                                        <Col sm="6">
+                                            <p>Enter Columns</p>  
+                                            <input name="cols" type="number" value={this.state.cols} min="1" onChange={this.updateValue} />
+                                        </Col>
                                     </Row>
                                 </div>
-                            )
-                        })}
-                        <Row>
-                            <Col sm={6}>
-                                <p>Name a category</p>
-                                <input type="text" name="name" onChange={this.updateCategory} />
-                            </Col>
-                            <Col sm={6}>
-                                <p>Box Color</p>
-                                <select onChange={this.updateCategory} name="currentColor"> 
-                                    {this.state.colorsAvailable.map((value,index) => {
-                                        return(
-                                            <option key={index} value={value} style={{backgroundColor:{value}}}>{value}</option>
-                                        )
-                                    })}
-                                </select>
+                                <br />
+                                <Row>
+                                    <Col sm={6}>
+                                        <p>Name a category</p>
+                                        <input type="text" name="name" onChange={this.updateCategory} />
+                                    </Col>
+                                    <Col sm={6}>
+                                        <p>Box Color</p>
+                                        <select onChange={this.updateCategory} name="currentColor"> 
+                                            {this.state.colorsAvailable.map((value,index) => {
+                                                return(
+                                                    <option key={index} value={value} style={{backgroundColor:{value}}}>{value}</option>
+                                                )
+                                            })}
+                                        </select>
+                                    </Col>
+                                </Row>
+                                <br /><br />
+                                <Button onClick={this.fixColors} variant="primary">Fix Selection</Button>
                             </Col>
                         </Row>
                         <br /><br />
-                        <Button onClick={this.fixColors} variant="primary">Fix Selection</Button>
-                        <br /><br />
                         {this.state.finalSelect.length>0 && 
-                        <table>
+                        <table className="table">
                             <thead>
                             <tr>
                                 <th>Category Name</th>
