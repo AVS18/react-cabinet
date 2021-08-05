@@ -13,13 +13,16 @@ class App extends react.Component{
             'colorArray':[["#a6a6a6"]],
             'colorsAvailable':["#DFFF00","#FFBF00","#FF7F50","#DE3163","#9FE2BF","#40E0D0","#6495ED","#CCCCFF"],
             'currentColor':'#a6a6a6',
+            'pastColor':"#a6a6a6",
             'name':'',
+            'oldname':'',
             'tempSelect': [],
             'finalSelect':[],
+            'allPointsSelect':[]
         }
     }
     updateCategory = (event) => {
-        this.setState({name:event.target.value})
+        this.setState({[event.target.name]:event.target.value})
     }
     updateValue = (event) => {
         this.setState({[event.target.name]:event.target.value})
@@ -56,18 +59,34 @@ class App extends react.Component{
     }
 
     selectBox = (r,c,event)=> {
-        let colorArray = this.state.colorArray;
-        colorArray[r][c] = this.state.currentColor;
-        let tempSelect = this.state.tempSelect;
-        tempSelect.push([r,c])
-        this.setState({colorArray:colorArray,tempSelect:tempSelect})
+        if(this.state.currentColor!=="#a6a6a6"&&this.state.currentColor===this.state.pastColor){
+            console.log("Same Color Reused")
+        }else if(this.state.name!==''&&this.state.name===this.state.oldname){
+            console.log("Same Name Reused")
+        }else{
+            let allPointsSelect = this.state.allPointsSelect;
+            let duplicate = allPointsSelect.findIndex((value,index)=>value[0]===r&&value[1]===c)
+            if(duplicate>=0){
+                console.log("Same Item Reselected");
+            }else{
+                let colorArray = this.state.colorArray;
+                colorArray[r][c] = this.state.currentColor;
+                let tempSelect = this.state.tempSelect;
+                let point = [r,c];
+                tempSelect.push(point)
+                allPointsSelect.push(point)
+                this.setState({colorArray:colorArray,tempSelect:tempSelect,allPointsSelect:allPointsSelect})
+            }
+        }
     }
 
     fixColors = (event) => {
         let finalSelect = this.state.finalSelect;
         let obj = {'name':this.state.name,'points':this.state.tempSelect}
         finalSelect.push(obj)
-        this.setState({finalSelect:finalSelect,tempSelect:[]})
+        let pastColor = this.state.currentColor
+        let oldname = this.state.name
+        this.setState({finalSelect:finalSelect,tempSelect:[],pastColor,oldname})
     }
     render(){
         return(
@@ -104,16 +123,16 @@ class App extends react.Component{
                             )
                         })}
                         <Row>
-                            <Col sm={4}>
+                            <Col sm={6}>
                                 <p>Name a category</p>
-                                <input type="text" name="category" onChange={this.updateCategory} />
+                                <input type="text" name="name" onChange={this.updateCategory} />
                             </Col>
-                            <Col sm={4}>
+                            <Col sm={6}>
                                 <p>Box Color</p>
-                                <select onChange={this.updateCategory}> 
+                                <select onChange={this.updateCategory} name="currentColor"> 
                                     {this.state.colorsAvailable.map((value,index) => {
                                         return(
-                                            <option key={index} value={value}>{value}</option>
+                                            <option key={index} value={value} style={{backgroundColor:{value}}}>{value}</option>
                                         )
                                     })}
                                 </select>
@@ -124,16 +143,20 @@ class App extends react.Component{
                         <br /><br />
                         {this.state.finalSelect.length>0 && 
                         <table>
+                            <thead>
                             <tr>
-                                <td>Category Name</td>
-                                <td>Row, Col points</td>
+                                <th>Category Name</th>
+                                <th>Row, Col points</th>
                             </tr>
+                            </thead>
+                            <tbody>
                             {this.state.finalSelect.map((value,index)=>{return(
                                 <tr key={index}>
                                     <td>{value.name}</td>
-                                    <td>{value.points}</td>
+                                    <td>{value.points.map((val2)=>{return(<span>({val2[0]},{val2[1]})&emsp;</span>)})}</td>
                                 </tr>
                             )})}
+                            </tbody>
                         </table>
                         }
                     </Container>
