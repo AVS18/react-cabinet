@@ -3,6 +3,7 @@ import './style.css'
 import wava from './the-wawa-foundation-1.svg'
 import log from './log.png'
 import App from './App'
+import logo from './logo.png'
 class Home extends react.Component{
     constructor(props){
         super(props);
@@ -13,7 +14,8 @@ class Home extends react.Component{
             <div className="main">
                 <div id="menu">
                     <div className="nav-bar" >
-                        <img height="70" src={wava} alt="wawa-logo" style={{marginTop:"50px"}} />
+                        <center><img height="50" width="50" src={logo} alt="techolution-logo" style={{marginTop:"50px"}} /></center>
+                        <img height="70" src={wava} alt="wawa-logo" />
                         <br />
                         <ul>
                             <li>
