@@ -1,5 +1,13 @@
+.App {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight:400;
+}
 .App-header {
     margin: 10px;
     min-height: 100vh;
     font-size: large;
 }
+.status-card {
+    display: flex;
+    justify-content: space-between;
+  }
