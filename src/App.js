@@ -1,7 +1,7 @@
 import './App.css';
 import react from 'react';
 import {Container,Row,Col,Button} from 'react-bootstrap';
-
+import axios from 'axios'
 class App extends react.Component{
     constructor(props){
         super(props)
@@ -88,6 +88,12 @@ class App extends react.Component{
         let oldname = this.state.name
         this.setState({finalSelect:finalSelect,tempSelect:[],pastColor,oldname})
     }
+
+    saveplan = async(event) => {
+        let data = this.state;
+        let response = await axios.post('http://35.230.11.154:4321/api/plan',{'data':data})
+        console.log(response)
+    }
     render(){
         return(
             <div className="App">
@@ -144,7 +150,8 @@ class App extends react.Component{
                                     </Col>
                                 </Row>
                                 <br /><br />
-                                <Button onClick={this.fixColors} variant="primary">Fix Selection</Button>
+                                <Button onClick={this.fixColors} variant="primary">Fix Selection</Button>&emsp;
+                                <Button onClick={this.saveplan} variant="info">Save Planogram</Button>
                             </Col>
                         </Row>
                         <br /><br />

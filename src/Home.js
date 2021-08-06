@@ -4,10 +4,16 @@ import wava from './the-wawa-foundation-1.svg'
 import log from './log.png'
 import App from './App'
 import logo from './logo.png'
+import OldPlan from './OldPlan';
 class Home extends react.Component{
     constructor(props){
         super(props);
-        this.state = {}
+        this.state = {'view':'create'}
+    }
+    updateView = (scr,event) => {
+        event.preventDefault();
+        console.log(scr)
+        this.setState({view:scr})
     }
     render(){
         return(
@@ -19,14 +25,14 @@ class Home extends react.Component{
                         <br />
                         <ul>
                             <li>
-                                <a href="/" className="side_link">
+                                <a onClick={(event)=> this.updateView('create',event)} className="side_link">
                                     <div>
                                         <i className="fa fa-home" aria-hidden="true"></i> &nbsp; Create Planogram
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a href="/" className="side_link">
+                                <a onClick={(event)=> this.updateView('view',event)} className="side_link">
                                     <div>
                                         <i className="fa fa-calendar-o" aria-hidden="true"></i> &nbsp; My Planograms
                                     </div>
@@ -42,7 +48,8 @@ class Home extends react.Component{
                         </div>
                     </div>
                     <div className="card_layout">
-                        <App />
+                        {this.state.view ==="create" && <App />}
+                        {this.state.view ==="view" && <OldPlan />}
                     </div>
                 </div>
             </div>
