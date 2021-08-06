@@ -25,14 +25,14 @@ class Home extends react.Component{
                         <br />
                         <ul>
                             <li>
-                                <a onClick={(event)=> this.updateView('create',event)} className="side_link">
+                                <a href="/" onClick={(event)=> this.updateView('create',event)} className="side_link">
                                     <div>
                                         <i className="fa fa-home" aria-hidden="true"></i> &nbsp; Create Planogram
                                     </div>
                                 </a>
                             </li>
                             <li>
-                                <a onClick={(event)=> this.updateView('view',event)} className="side_link">
+                                <a href="/" onClick={(event)=> this.updateView('view',event)} className="side_link">
                                     <div>
                                         <i className="fa fa-calendar-o" aria-hidden="true"></i> &nbsp; My Planograms
                                     </div>
