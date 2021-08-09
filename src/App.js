@@ -121,7 +121,7 @@ class App extends react.Component{
                             <Col sm="6">
                                 <p>Planogram UI</p>
                                 <div className={{margin:"10px"}}>
-                                    <Row>
+                                    <Row className="status-card">
                                         <Col sm="6">
                                             <p>Enter Rows</p>
                                             <input name="rows" type="number" value={this.state.rows} min="1" onChange={this.updateValue} />
