@@ -121,34 +121,38 @@ class App extends react.Component{
                             <Col sm="6">
                                 <p>Planogram UI</p>
                                 <div className={{margin:"10px"}}>
-                                    <Row className="status-card">
-                                        <Col sm="6">
-                                            <p>Enter Rows</p>
-                                            <input name="rows" type="number" value={this.state.rows} min="1" onChange={this.updateValue} />
-                                        </Col>
-                                        <Col sm="6">
-                                            <p>Enter Columns</p>  
-                                            <input name="cols" type="number" value={this.state.cols} min="1" onChange={this.updateValue} />
-                                        </Col>
-                                    </Row>
+                                    <Container>
+                                        <Row className="status-card">
+                                            <Col md="6">
+                                                <p>Enter Rows</p>
+                                                <input name="rows" type="number"  className="form-control" value={this.state.rows} min="1" onChange={this.updateValue} />
+                                            </Col>
+                                            <Col onLoadedMetadata="6">
+                                                <p>Enter Columns</p>  
+                                                <input name="cols" type="number" className="form-control" value={this.state.cols} min="1" onChange={this.updateValue} />
+                                            </Col>
+                                        </Row>
+                                    </Container>
+                                    <br />
+                                    <Container>
+                                        <Row>
+                                            <Col md="6">
+                                                <p>Name a category</p>
+                                                <input type="text" name="name" className="form-control" onChange={this.updateCategory} />
+                                            </Col>
+                                            <Col md="6">
+                                                <p>Box Color</p>
+                                                <select onChange={this.updateCategory} className="form-control" name="currentColor"> 
+                                                    {this.state.colorsAvailable.map((value,index) => {
+                                                        return(
+                                                            <option key={index} value={value} style={{backgroundColor:{value}}}>{value}</option>
+                                                        )
+                                                    })}
+                                                </select>
+                                            </Col>
+                                        </Row>
+                                    </Container>    
                                 </div>
-                                <br />
-                                <Row>
-                                    <Col sm={6}>
-                                        <p>Name a category</p>
-                                        <input type="text" name="name" onChange={this.updateCategory} />
-                                    </Col>
-                                    <Col sm={6}>
-                                        <p>Box Color</p>
-                                        <select onChange={this.updateCategory} name="currentColor"> 
-                                            {this.state.colorsAvailable.map((value,index) => {
-                                                return(
-                                                    <option key={index} value={value} style={{backgroundColor:{value}}}>{value}</option>
-                                                )
-                                            })}
-                                        </select>
-                                    </Col>
-                                </Row>
                                 <br /><br />
                                 <Button onClick={this.fixColors} variant="primary">Fix Selection</Button>&emsp;
                                 <Button onClick={this.saveplan} variant="info">Save Planogram</Button>
