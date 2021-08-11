@@ -19,12 +19,11 @@ class OldPlans extends react.Component{
                 <div className="App-header">
                     <Container>
                         {this.state.data.map((planogram,index)=>{
-                            console.log(planogram)
                             return(
                                 <div key={index}>
                                     <Row>
                                         <Col sm="6">
-                                            <p>Cabinet</p>
+                                            <p>{planogram.planoname}</p>
                                             {planogram.rowele.map((value,index)=>{
                                                 return(
                                                     <div key={index}>

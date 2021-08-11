@@ -2,9 +2,16 @@ import './App.css';
 import react from 'react';
 import {Container,Row,Col,Button} from 'react-bootstrap';
 import axios from 'axios'
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+
 class App extends react.Component{
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props){
-        super(props)
+        super(props);
         this.state = {
             'rows':1,
             'cols':1,
@@ -18,7 +25,17 @@ class App extends react.Component{
             'oldname':'',
             'tempSelect': [],
             'finalSelect':[],
-            'allPointsSelect':[]
+            'allPointsSelect':[],
+            'planoname':'',
+        }
+    }
+    componentDidMount = async() =>{
+        const { cookies } = this.props;
+        let token = cookies.get('token');
+        let data = {'token':token};
+        let response = await axios.post('http://35.230.11.154:4321/api/validate',{'data':data});
+        if(response.data.status==false){
+            this.props.history.push('/login')
         }
     }
     updateCategory = (event) => {
@@ -92,7 +109,11 @@ class App extends react.Component{
     saveplan = async(event) => {
         let data = this.state;
         let response = await axios.post('http://35.230.11.154:4321/api/plan',{'data':data})
-        console.log(response)
+        if(response.data.status){
+            alert(response.data.message);
+        }else{
+            alert(response.data.message);
+        }
     }
     render(){
         return(
@@ -154,8 +175,16 @@ class App extends react.Component{
                                     </Container>    
                                 </div>
                                 <br /><br />
-                                <Button onClick={this.fixColors} variant="primary">Fix Selection</Button>&emsp;
-                                <Button onClick={this.saveplan} variant="info">Save Planogram</Button>
+                                <Button onClick={this.fixColors} variant="primary">Fix Selection</Button>&emsp;<br /><br />
+                                {this.state.finalSelect.length>0 && 
+                                    <Row>
+                                        <Col md="6">
+                                            <p>Enter Planogram Name</p>
+                                            <input type="text" name="planoname" className="form-control" onChange={this.updateCategory} />
+                                            <Button onClick={this.saveplan} variant="info">Save Planogram</Button>
+                                        </Col>
+                                    </Row>
+                                }
                             </Col>
                         </Row>
                         <br /><br />
@@ -185,4 +214,4 @@ class App extends react.Component{
 }
 
 
-export default App;
+export default withCookies(App);

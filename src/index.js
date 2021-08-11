@@ -2,12 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-import Home from './Home'
+import { CookiesProvider } from "react-cookie";
 import Router from './router'
 ReactDOM.render(
-  <React.StrictMode>
-    <Router />
-  </React.StrictMode>,
+    <CookiesProvider>
+        <React.StrictMode>
+            <Router />
+        </React.StrictMode>
+    </CookiesProvider>,
   document.getElementById('root')
 );
 

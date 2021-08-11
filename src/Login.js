@@ -6,13 +6,29 @@ import {Container,Form,Button} from 'react-bootstrap';
 import logo from './assets/logo.svg';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios';
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
 
 class Login extends react.Component{
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props){
         super(props);
+        const { cookies } = this.props;
         this.state = {
             'username':'',
-            'password':''
+            'password':'',
+        }
+    }
+    componentDidMount = async() => {
+        const { cookies } = this.props;
+        let token = cookies.get('token');
+        let data = {'token':token};
+        let response = await axios.post('http://35.230.11.154:4321/api/validate',{'data':data});
+        if(response.data.status){
+            this.props.history.push('/')
         }
     }
     updateState = (event) => {
@@ -21,9 +37,11 @@ class Login extends react.Component{
 
     submit = async(event) =>{
         event.preventDefault();
+        const { cookies } = this.props;
         let data = this.state;
         let response = await axios.post('http://35.230.11.154:4321/api/login',{'data':data})
         if (response.data.status){
+            cookies.set('token', response.data.token, { path: '/', maxAge: 60 });
             alert(response.data.msg)
             this.props.history.push('/')
         }else{
@@ -69,4 +87,4 @@ class Login extends react.Component{
     }
 }
 
-export default Login;
+export default withCookies(Login);
