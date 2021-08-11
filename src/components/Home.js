@@ -49,21 +49,21 @@ class Home extends react.Component{
                                 <div className="homepage-section" title="Dashboard">
                                     <img className="logo home-profile" src={logo} alt="Logo" />
                                 </div>
-                                <div className="homepage-section" onClick={(event) => this.updateView("create",event)} title="Dashboard">
+                                <div className="homepage-section" onClick={(event) => this.updateView("create",event)} title="Generate Planogram">
                                     <img
                                         className="icons home-profile"
                                         src={home}
                                         alt="Homepage Icon"
                                     />
                                 </div>
-                                <div className="homepage-section" onClick={(event) => this.updateView("plan",event)} title="Dashboard">
+                                <div className="homepage-section" onClick={(event) => this.updateView("plan",event)} title="Search Planogram">
                                     <img
                                         className="icons graph-profile"
                                         src={search}
                                         alt="Search Icon"
                                     />
                                 </div>
-                                <div className="homepage-section" onClick={this.logout} title="Dashboard">
+                                <div className="homepage-section" onClick={this.logout} title="Logout">
                                     <img
                                         className="icons graph-profile"
                                         src={exit}
