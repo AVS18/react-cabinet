@@ -1,6 +1,6 @@
 import react from 'react'
 import axios from 'axios'
-import './App.css'
+import '../App.css'
 import {Container,Row,Col} from 'react-bootstrap';
 
 class OldPlans extends react.Component{

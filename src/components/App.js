@@ -1,9 +1,10 @@
-import './App.css';
+import '../App.css';
 import react from 'react';
 import {Container,Row,Col,Button} from 'react-bootstrap';
 import axios from 'axios'
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import { withRouter } from 'react-router-dom';
 
 class App extends react.Component{
     static propTypes = {
@@ -31,11 +32,15 @@ class App extends react.Component{
     }
     componentDidMount = async() =>{
         const { cookies } = this.props;
-        let token = cookies.get('token');
-        let data = {'token':token};
-        let response = await axios.post('http://35.230.11.154:4321/api/validate',{'data':data});
-        if(response.data.status==false){
-            this.props.history.push('/login')
+        let token = cookies.get('token') || null;
+        if(token===null){
+            this.props.history.push('/')
+        }else{
+            let data = {'token':token};
+            let response = await axios.post('http://35.230.11.154:4321/api/validate',{'data':data});
+            if(response.data.status===false){
+                this.props.history.push('/')
+            }
         }
     }
     updateCategory = (event) => {
@@ -214,4 +219,4 @@ class App extends react.Component{
 }
 
 
-export default withCookies(App);
+export default withRouter(withCookies(App));

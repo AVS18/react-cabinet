@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { CookiesProvider } from "react-cookie";
-import Router from './router'
+import Router from './components/router'
 ReactDOM.render(
     <CookiesProvider>
         <React.StrictMode>

@@ -1,13 +1,14 @@
 import react from 'react'
-import './style.css'
-import './app.component.css'
-import './login.css'
+import '../style.css'
+import '../app.component.css'
+import '../login.css'
 import {Container,Form,Button} from 'react-bootstrap';
-import logo from './assets/logo.svg';
+import logo from '../assets/logo.svg';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios';
 import { instanceOf } from 'prop-types';
 import { withCookies, Cookies } from 'react-cookie';
+import {withRouter} from 'react-router-dom';
 
 class Login extends react.Component{
     static propTypes = {
@@ -16,7 +17,6 @@ class Login extends react.Component{
 
     constructor(props){
         super(props);
-        const { cookies } = this.props;
         this.state = {
             'username':'',
             'password':'',
@@ -24,11 +24,13 @@ class Login extends react.Component{
     }
     componentDidMount = async() => {
         const { cookies } = this.props;
-        let token = cookies.get('token');
-        let data = {'token':token};
-        let response = await axios.post('http://35.230.11.154:4321/api/validate',{'data':data});
-        if(response.data.status){
-            this.props.history.push('/')
+        let token = cookies.get('token') || null;
+        if(token){
+            let data = {'token':token};
+            let response = await axios.post('http://35.230.11.154:4321/api/validate',{'data':data});
+            if(response.data.status){
+                this.props.history.push('/dashboard')
+            }
         }
     }
     updateState = (event) => {
@@ -43,7 +45,7 @@ class Login extends react.Component{
         if (response.data.status){
             cookies.set('token', response.data.token, { path: '/', maxAge: 60 });
             alert(response.data.msg)
-            this.props.history.push('/')
+            this.props.history.push('/dashboard')
         }else{
             alert(response.data.msg)
         }
@@ -59,7 +61,7 @@ class Login extends react.Component{
                     <Container>
                         <div style={{display:"flex",justifyContent:"center",paddingTop:"100px"}}>
                             <Form onSubmit={this.submit}>
-                                <div style={{textAlign:'center'}}><img src={logo} width="100" /><br /><p>Login Portal</p></div>
+                                <div style={{textAlign:'center'}}><img src={logo} alt="Logo" width="100" /><br /><p>Login Portal</p></div>
                                 <Form.Group className="mb-3" controlId="formBasicUsername">
                                     <Form.Label>Username</Form.Label>
                                     <Form.Control type="text" name="username" value={this.state.username} onChange={this.updateState} placeholder="Enter Username" />
@@ -87,4 +89,4 @@ class Login extends react.Component{
     }
 }
 
-export default withCookies(Login);
+export default withRouter(withCookies(Login));

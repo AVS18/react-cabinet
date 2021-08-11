@@ -1,14 +1,17 @@
 import react from 'react';
 import OldPlan from './OldPlan';
 
-import './style.css'
-import './app.component.css'
-import logo from './assets/logo.svg';
-import graph from './assets/graph.svg';
-import shape from './assets/Shape.svg';
-import user from './assets/user.svg';
+import '../style.css'
+import '../app.component.css'
+import logo from '../assets/logo.svg';
+import search from '../assets/search.svg';
+import exit from '../assets/exit.png'
+import home from '../assets/Shape.svg';
+import user from '../assets/user.svg';
 import App from './App'
-
+import { instanceOf } from 'prop-types';
+import { withCookies, Cookies } from 'react-cookie';
+import { withRouter } from 'react-router-dom';
 //import logo from './logo.png'
 // import { Drawer } from '@material-ui/core';
 import React from 'react';
@@ -16,14 +19,23 @@ import Drawer from '@material-ui/core/Drawer';
 
   
 class Home extends react.Component{
+    static propTypes = {
+        cookies: instanceOf(Cookies).isRequired
+    };
+
     constructor(props){
         super(props);
         this.state = {'view':'create'}
     }
     updateView = (scr,event) => {
         event.preventDefault();
-        console.log(scr)
         this.setState({view:scr})
+    }
+
+    logout = () => {
+        const { cookies } = this.props;
+        cookies.remove('token');
+        this.props.history.push('/')
     }
     
     render(){
@@ -40,15 +52,22 @@ class Home extends react.Component{
                                 <div className="homepage-section" onClick={(event) => this.updateView("create",event)} title="Dashboard">
                                     <img
                                         className="icons home-profile"
-                                        src={shape}
+                                        src={home}
                                         alt="Homepage Icon"
                                     />
                                 </div>
                                 <div className="homepage-section" onClick={(event) => this.updateView("plan",event)} title="Dashboard">
                                     <img
                                         className="icons graph-profile"
-                                        src={graph}
-                                        alt="Graph Icon"
+                                        src={search}
+                                        alt="Search Icon"
+                                    />
+                                </div>
+                                <div className="homepage-section" onClick={this.logout} title="Dashboard">
+                                    <img
+                                        className="icons graph-profile"
+                                        src={exit}
+                                        alt="Exit Icon"
                                     />
                                 </div>
                                 <br />
@@ -74,4 +93,4 @@ class Home extends react.Component{
     }
 }
 
-export default Home;
+export default withRouter(withCookies(Home));

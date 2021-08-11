@@ -1,9 +1,9 @@
 import react from 'react'
-import './style.css'
-import './app.component.css'
-import './login.css'
+import '../style.css'
+import '../app.component.css'
+import '../login.css'
 import {Container,Form,Button} from 'react-bootstrap';
-import logo from './assets/logo.svg';
+import logo from '../assets/logo.svg';
 import Drawer from '@material-ui/core/Drawer';
 import axios from 'axios';
 
@@ -43,7 +43,7 @@ class Register extends react.Component{
                     <Container>
                         <div style={{display:"flex",justifyContent:"center",paddingTop:"100px"}}>
                             <Form onSubmit={this.submit}>
-                                <div style={{textAlign:'center'}}><img src={logo} width="100" /><br /><p>Registration Portal</p></div>
+                                <div style={{textAlign:'center'}}><img src={logo} alt="logo" width="100" /><br /><p>Registration Portal</p></div>
                                 <Form.Group className="mb-3" controlId="formBasicName">
                                     <Form.Label>First Name</Form.Label>
                                     <Form.Control type="text" name="firstname" value={this.state.firstname} onChange={this.updateState}  placeholder="Enter First Name" />

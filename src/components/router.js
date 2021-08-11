@@ -1,5 +1,5 @@
 import react from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from './Home'
 import Login from './Login'
 import Register from './Register'
@@ -12,8 +12,8 @@ class AppRouter extends react.Component{
         return(
             <Router>
                 <Switch>
-                    <Route exact path='/' component={Home} />
-                    <Route exact path='/login' component={Login} />
+                    <Route exact path='/dashboard' component={Home} />
+                    <Route exact path='/' component={Login} />
                     <Route exact path='/register' component={Register} />
                 </Switch>
             </Router>
